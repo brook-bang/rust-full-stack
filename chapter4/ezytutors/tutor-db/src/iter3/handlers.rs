@@ -1,34 +1,49 @@
 use actix_web::{HttpResponse, web};
 
-use crate::{models::Course, state::AppState};
+use crate::{
+    db_access::{get_course_details_db, get_courses_for_tutor_db, post_new_course_db},
+    models::Course,
+    state::AppState,
+};
 
 pub async fn health_check_handler(app_state: web::Data<AppState>) -> HttpResponse {
-    let health_check_response = &app_state.health_check_response;
+    let health_check_reponse = &app_state.health_check_response;
     let mut visit_count = app_state.visit_count.lock().unwrap();
-    let response = format!("{} {} times", health_check_response, visit_count);
+    let response = format!("{} {} times", health_check_reponse, visit_count);
     *visit_count += 1;
     HttpResponse::Ok().json(&response)
 }
 
 pub async fn get_courses_for_tutor(
-    _app_state: web::Data<AppState>,
-    _params: web::Path<(i32,)>,
+    app_state: web::Data<AppState>,
+    params: web::Path<(i32,)>,
 ) -> HttpResponse {
-    HttpResponse::Ok().json("success")
+    let tuple = params.0;
+    let tutor_id: i32 = tuple;
+    let courses = get_courses_for_tutor_db(&app_state.db, tutor_id).await;
+    HttpResponse::Ok().json(courses)
 }
 
 pub async fn get_course_details(
-    _app_state: web::Data<AppState>,
-    _params: web::Path<(i32, i32)>,
+    app_state: web::Data<AppState>,
+    params: web::Path<(i32, i32)>,
 ) -> HttpResponse {
-    HttpResponse::Ok().json("success")
+    let (tutor_id, course_id) = (params.0, params.1);
+    let course = get_course_details_db(&app_state.db, tutor_id, course_id).await;
+    HttpResponse::Ok().json(course)
 }
 
+/*  复制粘贴命令
+curl -X POST localhost:3000/courses/ \
+-H "Content-Type: application/json" \
+ -d '{"tutor_id":1, "course_name":"Hello there customer 1 !"}'
+*/
 pub async fn post_new_course(
-    _new_course: web::Json<Course>,
-    _app_state: web::Data<AppState>,
+    new_course: web::Json<Course>,
+    app_state: web::Data<AppState>,
 ) -> HttpResponse {
-    HttpResponse::Ok().json("success")
+    let course = post_new_course_db(&app_state.db, new_course.into()).await;
+    HttpResponse::Ok().json(course)
 }
 
 #[cfg(test)]
@@ -57,7 +72,7 @@ mod tests {
     }
 
     #[actix_rt::test]
-    async fn get_course_details_test() {
+    async fn get_course_detail_test() {
         dotenv().ok();
         let database_url = env::var("DATABASE_URL").expect("DATABASE_URL is not set in .env file");
         let pool: PgPool = PgPool::connect(&database_url).await.unwrap();
@@ -83,7 +98,7 @@ mod tests {
         });
 
         let new_course_msg = Course {
-            course_id: 1,
+            course_id: 3,
             tutor_id: 1,
             course_name: "This is the next course".into(),
             posted_time: Some(
