@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT tutor_id, course_id, course_name, posted_time FROM ezy_course_c5 where tutor_id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "tutor_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "course_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "course_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "posted_time",
+        "type_info": "Timestamp"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "5961d2b3d118caac7eb43cc36dab456d153fc8b89a6891e3678b643f4561fdab"
+}

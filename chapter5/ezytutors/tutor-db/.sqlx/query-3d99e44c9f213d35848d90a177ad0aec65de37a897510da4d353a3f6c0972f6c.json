@@ -1,0 +1,42 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "insert into ezy_course_c4 (course_id,tutor_id,course_name) values ($1,$2,$3) returning tutor_id,course_id,course_name,posted_time",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "tutor_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "course_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 2,
+        "name": "course_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "posted_time",
+        "type_info": "Timestamp"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4",
+        "Int4",
+        "Varchar"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "3d99e44c9f213d35848d90a177ad0aec65de37a897510da4d353a3f6c0972f6c"
+}
