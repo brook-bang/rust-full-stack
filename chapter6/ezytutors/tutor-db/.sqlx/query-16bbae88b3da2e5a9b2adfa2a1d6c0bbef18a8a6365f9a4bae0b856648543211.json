@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM ezy_course_c6 where tutor_id = $1 and course_id = $2",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Int4",
+        "Int4"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "16bbae88b3da2e5a9b2adfa2a1d6c0bbef18a8a6365f9a4bae0b856648543211"
+}

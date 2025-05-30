@@ -1,0 +1,14 @@
+[package]
+name = "tutor-web-app-ssr"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+actix-web = "4.2.1"
+actix-files = "0.6.2"
+tera = "1.17.0"
+serde = { version = "1.0.215", features = ["derive"] }
+
+[dev-dependencies]
+# For automated tests
+actix-rt = "2.7.0"

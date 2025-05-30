@@ -1,0 +1,40 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT tutor_id, tutor_name, tutor_pic_url, tutor_profile FROM ezy_tutor_c6 where tutor_id = $1",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "tutor_id",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 1,
+        "name": "tutor_name",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 2,
+        "name": "tutor_pic_url",
+        "type_info": "Varchar"
+      },
+      {
+        "ordinal": 3,
+        "name": "tutor_profile",
+        "type_info": "Varchar"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Int4"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "5713c04d4ff9a84bdb43b4d7d1de9c78ae557acf3de06439487fda80024b142e"
+}
